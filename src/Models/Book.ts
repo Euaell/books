@@ -41,7 +41,6 @@ const BookSchema: Schema<IBook> = new Schema({
     Author: { 
         type: String, 
         default: "Unknown",
-        // capitalize the entire string
         set: (v: string) => v.toUpperCase().trim(),
         required: true
     },

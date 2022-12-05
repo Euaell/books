@@ -24,6 +24,6 @@ router.get('/users/:id', UserController.getUser)
 router.put('/users/:id', UserController.updateUser)
 router.delete('/users/:id', UserController.deleteUser)
 
-router.put('/users/makeAdmin/:id', UserController.makeAdmin)
+router.put('/users/makeAdmin/:id', auth, UserController.makeAdmin)
 
 export default router

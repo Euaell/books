@@ -7,7 +7,7 @@
     "test": "jest --runInBand --detectOpenHandles",
     "test-coverage": "jest --runInBand --detectOpenHandles --coverage",
     "dev": "nodemon --files  src/index.ts",
-    "start": "tsc && node src/server.ts",
+    "start": "tsc && node src/index.ts",
     "lint": "eslint . --ext .ts",
     "build": "tsc -p .",
     "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}"

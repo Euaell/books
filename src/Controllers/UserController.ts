@@ -143,6 +143,11 @@ export class UserController {
 
     public static async makeAdmin(req: Request, res: Response) {
         try {
+            const admin = req.body.user
+
+            if (admin.Role !== roles.admin) {
+                return res.status(401).json({ msg: 'Unauthorized' })
+            }
             const user = await User.findByIdAndUpdate(req.params.id, { Role: roles.admin }, { new: true }).select('-Password') as IUser
 
             res.status(200).json(user)
@@ -156,7 +161,7 @@ export class UserController {
     public static async addFriend(req: Request, res: Response) {
         try {
             const user = req.body.user
-            const friend = await User.findById(req.params.id) as IUser
+            const friend = await User.findById(req.body.friendId) as IUser
 
             if (!friend) {
                 return res.status(400).json({ msg: 'User not found' })
