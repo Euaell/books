@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
+
 import Book, { IBook } from '../Models/Book'
 
 export class BookController {
-    public static async createBook(req: Request, res: Response) {
+    public static async createBook(req: Request, res: Response, next: NextFunction) {
         
         try {
             let { Title } = req.body
@@ -10,20 +11,21 @@ export class BookController {
             
             let book = await Book.findOne({ Title })
             if (book) {
-                // increment the readCount
-                // await Book.findByIdAndUpdate(book.id, { $inc: { ReadCount: 1 } })
-                // let updatedBook = await Book.findById(book.id)
                 return res.status(200).json({ book })
             }
 
             const bookFields: IBook = req.body            
             let newBook = await Book.create(bookFields)
 
-            res.status(200).json({ newBook })
+            req.body.book = newBook
+
+            next()
+
+            // res.status(200).json({ newBook })
 
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 
@@ -34,22 +36,23 @@ export class BookController {
             res.status(200).json({ books })
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 
-    public static async getBook(req: Request, res: Response) {
+    public static async getBook(req: Request, res: Response, next: NextFunction) {
         try {
-            const book = await Book.findById(req.params.id)
+            const book = await Book.findById(req.body.bookId)
 
             if (!book) {
-                return res.status(404).json({ msg: 'Book not found' })
+                return res.status(404).json({ message: 'Book not found' })
             }
-
+            req.body.book = book
             res.status(200).json({ book })
+            next()
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 
@@ -61,7 +64,7 @@ export class BookController {
             res.status(200).json({ books })
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 
@@ -78,7 +81,7 @@ export class BookController {
             
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 
@@ -89,14 +92,14 @@ export class BookController {
             const books = await Book.find({ Title: Title })
             console.log(books)
             if (!books) {
-                return res.status(404).json({ msg: ` Book with ${Title} not found` })
+                return res.status(404).json({ message: ` Book with ${Title} not found` })
             }
 
 
             res.status(200).json({ books })
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 
@@ -107,13 +110,13 @@ export class BookController {
             const books = await Book.find({ Title: { $regex: Title } })
 
             if (!books) {
-                return res.status(404).json({ msg: ` Book with ${Title} not found` })
+                return res.status(404).json({ message: ` Book with ${Title} not found` })
             }
 
             res.status(200).json({ books })
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 
@@ -129,7 +132,7 @@ export class BookController {
 
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 
@@ -138,16 +141,16 @@ export class BookController {
             const book = await Book.findById(req.params.id)
 
             if (!book) {
-                return res.status(404).json({ msg: 'Book not found' })
+                return res.status(404).json({ message: 'Book not found' })
             }
 
             await book.remove()
 
-            res.status(200).json({ msg: 'Book removed' })
+            res.status(200).json({ message: 'Book removed' })
 
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 
@@ -163,7 +166,7 @@ export class BookController {
             let book = await Book.findById(req.params.id)
 
             if (!book) {
-                return res.status(404).json({ msg: 'Book not found' })
+                return res.status(404).json({ message: 'Book not found' })
             }
 
             let updatedBook = await Book.findByIdAndUpdate(req.params.id, { $set: bookFields }, { new: true })
@@ -172,7 +175,7 @@ export class BookController {
 
         } catch (err) {
             console.error(err.message)
-            res.status(500).send({ msg: err.message })
+            res.status(500).send({ message: err.message })
         }
     }
 }

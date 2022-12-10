@@ -3,6 +3,10 @@ import { Schema, Document, model } from "mongoose"
 // email validation
 import validator from "validator"
 
+// TODO: add a field for profile picture
+// TODO: add a field for bio
+// TODO: add a feature for users to choose the level of privacy they want (public, private, friends only)
+
 export interface IUser extends Document {
     FirstName: string
     LastName: string
@@ -10,10 +14,9 @@ export interface IUser extends Document {
     Password: string
     Role: string
     DateJoined: Date
-    // array of books model id
     Books: Schema.Types.ObjectId[]
     Friends: Schema.Types.ObjectId[]
-    age: number
+    DOB: Date
 }
 
 export enum roles {
@@ -55,9 +58,15 @@ const UserSchema: Schema<IUser> = new Schema({
     DateJoined: { type: Date, default: Date.now, required: true},
     Books: [{ type: Schema.Types.ObjectId, ref: "Book" }],
     Friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    age: { 
-        type: Number,
-        min: [12, "Age must be greater than 12"], 
+    DOB: { 
+        type: Date,
+        validate: {
+            validator: (val: Date) => {
+                // check if date is less than 18 years ago
+                return Date.now() - val.getTime() >= 1000 * 60 * 60 * 24 * 365 * 18
+            },
+            message: (props: any) => `"${props.value}" is not a valid date!`
+        },
         required: true 
     }
 })

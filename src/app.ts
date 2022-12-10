@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'
 // import routes
 import userRoutes from './routes/user'
 import bookRoutes from './routes/book'
+import UnverifiedUserRoutes from './routes/unverifiedUser'
 
 const app: Application = express()
 
@@ -25,5 +26,6 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api/user', userRoutes)
 app.use('/api/book', bookRoutes)
+app.use('/api/unverified-user', UnverifiedUserRoutes)
 
 export default app

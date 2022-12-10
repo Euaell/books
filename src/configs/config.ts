@@ -1,7 +1,9 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-const DB_URI = process.env.MONGO_URI || "mongodb://localhost:27017/BookDB"
+const DB_URI = "mongodb://localhost:27017/BookDB"
+
+// const DB_URI = process.env.MONGO_URI || "mongodb://localhost:27017/BookDB"
 
 const PORT = process.env.PORT || 5000
 const JWT_SECRET = process.env.JWT_SECRET || "secret"

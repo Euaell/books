@@ -11,7 +11,9 @@ router.get('/me', auth, UserController.me)
 router.get('/logout', auth, UserController.logout)
 
 router.get('/getBooks', auth, UserController.getBooks, BookController.getBooksByIds)
-router.post('/addBook', auth, UserController.addBook)
+router.get('/getBooksuggestion', auth, UserController.getBookSuggestions, BookController.getBooksByIds)
+router.post('/addBook', auth, BookController.createBook, UserController.addBook)
+router.post('/addBookById', auth, BookController.getBook, UserController.addBookById)
 router.delete('/removeBook', auth, UserController.removeBook)
 
 router.get('/getfriends', auth, UserController.getFriends)
