@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import configs from '../configs/config'
 import jwt from 'jsonwebtoken'
-import User, { roles, IUser } from '../models/user'
+import User, { roles, IUser } from '../Models/User'
 import { generateToken } from '../utils/generateToken'
 import { sendEmail } from '../utils/sendEmail'
 import { hashPassword, comparePassword } from '../utils/hashPassword'

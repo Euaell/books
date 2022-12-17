@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { BookController } from '../controllers/BookController'
-import { UserController } from '../controllers/UserController'
+import { BookController } from '../Controllers/BookController'
+import { UserController } from '../Controllers/UserController'
 import { auth } from '../middlewares/autherize'
 
 const router = Router()

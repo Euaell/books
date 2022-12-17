@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import User, { IUser } from '../models/user'
+import User, { IUser } from '../Models/User'
 import jwt from 'jsonwebtoken'
 import UnVerifiedUser, { IUnverifiedUser } from '../Models/UnVerifiedUser'
 

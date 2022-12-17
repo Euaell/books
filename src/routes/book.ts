@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { BookController } from '../controllers/BookController'
+import { BookController } from '../Controllers/BookController'
 import { auth } from '../middlewares/autherize'
 
 const router = Router()

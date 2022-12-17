@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import configs from '../configs/config';
 
 import UnVerifiedUser from '../Models/UnVerifiedUser';
-import { generateToken } from '../Utils/generateToken';
+import { generateToken } from '../utils/generateToken';
 import { hashPassword, comparePassword } from '../utils/hashPassword';
-import { sendEmail } from '../Utils/sendEmail';
+import { sendEmail } from '../utils/sendEmail';
 
 export class UnverifiedUserController {
 
